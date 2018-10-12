@@ -11,6 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/songs/create', 'SongController@create');
+Route::post('/songs/create', 'SongController@store');
+Route::get('/songs/edit', 'SongController@edit');
+Route::post('/songs/edit', 'SongController@store');
+Route::get('/songs/list', 'SongController@listing');
+Route::post('/songs/list', 'SongController@deleteItems');
