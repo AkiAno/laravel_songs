@@ -140,12 +140,29 @@ class SongController extends Controller
             return redirect('/songs/list');
         }
 
-        public function userSongs(){
+        public function userSongs(Request $request){
             $query ="
                 SELECT * FROM
                 `songs`
             ";
             $songs = DB::select($query);
-                
+            $songs = (array)$songs;
+            $id = $request->id;
+
+            $cur_song = null;
+            
+            if ($id) {
+                $query2 = "
+                SELECT * FROM `songs` WHERE `id` = ?
+                ";
+                $cur_song = DB::selectOne($query2, [$id]);
+            }
+            
+            return view('songs/user_songs', ['songs' => $songs, 'id' => $id, 'cur_song' => $cur_song]);
         }
+
+      /*  public function displayVideo(Request $request){
+            $id = $request->id;
+            return view('songs/user_songs', ['id' => $id]);
+        }*/
 }
